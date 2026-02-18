@@ -18,9 +18,9 @@ const LABEL: Record<ConnectionStatus, string> = {
 
 const BADGE: Record<ConnectionStatus, string> = {
   connecting:   'bg-amber-400 animate-pulse',
-  connected:    'bg-emerald-400',
+  connected:    'bg-teal-600',
   waiting:      'bg-amber-400 animate-pulse',
-  matched:      'bg-emerald-400',
+  matched:      'bg-teal-600',
   disconnected: 'bg-red-500',
   reconnecting: 'bg-orange-400 animate-pulse',
 };
