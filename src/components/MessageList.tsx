@@ -18,7 +18,6 @@ export default function MessageList({ messages, strangerTyping }: Props) {
   if (messages.length === 0) {
     return (
       <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center px-10 dark:bg-black">
-        <span className="text-7xl">👋</span>
         <h2 className="text-3xl font-bold text-white">Welcome!</h2>
         <p className="text-lg text-slate-400">Connect with random strangers anonymously</p>
       </div>

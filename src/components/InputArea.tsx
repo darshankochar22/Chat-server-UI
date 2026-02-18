@@ -64,7 +64,7 @@ export default function InputArea({ isMatched, onSend, onSkip, onType }: Props) 
           className="flex-1 bg-black text-white text-base placeholder-slate-400
                      rounded-full px-6 py-3.5 outline-none border-2 border-slate-600
                      focus:bg-black
-                     disabled:bg-slate-900 disabled:text-slate-600
+                     disabled:bg-black disabled:text-slate-600
                      disabled:placeholder-slate-700 disabled:cursor-not-allowed
                      transition-all duration-200"
         />
