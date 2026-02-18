@@ -13,6 +13,7 @@ export interface ChatMessage {
   kind: MessageKind;
   text: string;
   time: string;
+  username ?: string;
 }
 
 export type ServerPayload =
@@ -20,7 +21,7 @@ export type ServerPayload =
   | { type: 'info';       message: string }
   | { type: 'session_id'; message: string }
   | { type: 'status';     message: 'Matched' | 'Waiting' }
-  | { type: 'chat';       message: string }
+  | { type: 'chat';       message: string ;username?: string}
   | { type: 'typing';     status: boolean }
   | { type: 'error';      message: string };
 

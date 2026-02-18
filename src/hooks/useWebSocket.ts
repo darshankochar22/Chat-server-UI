@@ -27,9 +27,16 @@ export function useWebSocket() {
   const [strangerTyping, setStrangerTyping] = useState(false);
 
 
-  const push = useCallback((kind: ChatMessage['kind'], text: string) => {
-    setMessages(prev => [...prev, { id: uid(), kind, text, time: now() }]);
-  }, []);
+const push = useCallback(
+  (kind: ChatMessage['kind'], text: string, username?: string) => {
+    setMessages(prev => [
+      ...prev,
+      { id: uid(), kind, text, time: now(), username }
+    ]);
+  },
+  []
+);
+
 
   const emit = useCallback((payload: ClientPayload) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
@@ -92,8 +99,8 @@ export function useWebSocket() {
               break;
             case 'chat':
               setStrangerTyping(false);
-              pushRef.current('received', raw.message);
-              break;
+              pushRef.current('received', raw.message, raw.username);
+              break; 
             case 'typing':
               setStrangerTyping(raw.status);
               break;
@@ -136,7 +143,7 @@ export function useWebSocket() {
       if (!t || !isMatched) return;
       if (t.length > MAX_CHARS) { push('system', `❌ Max ${MAX_CHARS} characters`); return; }
       emit({ type: 'msg', text: t });
-      push('sent', t);
+      push('sent', t,'You');
       emit({ type: 'typing', status: false });
     },
     [isMatched, emit, push],
