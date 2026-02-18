@@ -113,10 +113,7 @@ export default function LandingPage({ onStart }: LandingPageProps) {
           <div className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#00c8b4] via-[#00e5cc] to-[#1affd5]
             grid place-items-center text-black">
           </div>
-          <span className="text-lg font-extrabold">cipher</span>
         </div>
-
-        <BtnGrad onClick={onStart}>Start Chatting</BtnGrad>
       </nav>
 
       <div className="relative z-10 bg-black text-[#e4e4f0]">
@@ -129,12 +126,6 @@ export default function LandingPage({ onStart }: LandingPageProps) {
             text-[clamp(44px,9vw,110px)] max-w-[14ch]">
             Talk to someone.<br /><GT>Anyone. Now.</GT>
           </h1>
-
-          <p className="anim-up-3 mt-6 text-[#6a6a80] max-w-[52ch] leading-7
-            text-[clamp(14px,1.6vw,18px)]">
-            Instant anonymous chat. No accounts, no history, no judgment.
-            Just you, a stranger, and one real conversation.
-          </p>
 
           <div className="anim-up-4 flex gap-3 mt-9 flex-wrap justify-center">
             <BtnGrad onClick={onStart}>Chat Now — Free</BtnGrad>
