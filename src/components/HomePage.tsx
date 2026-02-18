@@ -108,12 +108,6 @@ export default function LandingPage({ onStart }: LandingPageProps) {
       <nav className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between
         px-5 sm:px-10 md:px-16 py-3 transition-all
         ${scrolled ? "bg-black/90 backdrop-blur-xl border-b border-[#00c8b420]" : ""}`}>
-
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#00c8b4] via-[#00e5cc] to-[#1affd5]
-            grid place-items-center text-black">
-          </div>
-        </div>
       </nav>
 
       <div className="relative z-10 bg-black text-[#e4e4f0]">
