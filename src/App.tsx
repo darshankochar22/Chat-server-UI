@@ -16,6 +16,8 @@ export default function App() {
     sendMessage,
     skipPartner,
     notifyTyping,
+    username,
+    setUsername,
   } = useWebSocket();
 
   if (!showChat) {
@@ -24,7 +26,7 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-dvh w-screen overflow-hidden dark:bg-black">
-      <Header status={status} />
+      <Header status={status} username={username} setUsername={setUsername} />
       <MessageList messages={messages} strangerTyping={strangerTyping} />
       <InputArea
         isMatched={isMatched}

@@ -25,18 +25,19 @@ export function useWebSocket() {
   const [status,         setStatus]         = useState<ConnectionStatus>('connecting');
   const [isMatched,      setIsMatched]      = useState(false);
   const [strangerTyping, setStrangerTyping] = useState(false);
+  const [username,       setUsername]       = useState<string>(
+    () => localStorage.getItem('chat_name') || 'Anonymous'
+  );
 
-
-const push = useCallback(
-  (kind: ChatMessage['kind'], text: string, username?: string) => {
-    setMessages(prev => [
-      ...prev,
-      { id: uid(), kind, text, time: now(), username }
-    ]);
-  },
-  []
-);
-
+  const push = useCallback(
+    (kind: ChatMessage['kind'], text: string, username?: string) => {
+      setMessages(prev => [
+        ...prev,
+        { id: uid(), kind, text, time: now(), username },
+      ]);
+    },
+    []
+  );
 
   const emit = useCallback((payload: ClientPayload) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
@@ -44,11 +45,26 @@ const push = useCallback(
     }
   }, []);
 
+  // Persist username to localStorage
+  useEffect(() => {
+    localStorage.setItem('chat_name', username);
+  }, [username]);
+
+  // Send updated name to server whenever username changes
+  useEffect(() => {
+    if (!wsRef.current) return;
+    if (wsRef.current.readyState !== WebSocket.OPEN) return;
+    emit({ type: 'set_name', name: username });
+  }, [username, emit]);
 
   const pushRef = useRef(push);
   const emitRef = useRef(emit);
   useEffect(() => { pushRef.current = push; }, [push]);
   useEffect(() => { emitRef.current = emit; }, [emit]);
+
+  // Store latest username in a ref so onopen always has the current value
+  const usernameRef = useRef(username);
+  useEffect(() => { usernameRef.current = username; }, [username]);
 
   useEffect(() => {
     let cancelled = false;
@@ -71,6 +87,7 @@ const push = useCallback(
         attemptsRef.current = 0;
         delayRef.current    = 1000;
         setStatus('connected');
+        emitRef.current({ type: 'set_name', name: usernameRef.current });
       };
 
       ws.onmessage = e => {
@@ -99,8 +116,8 @@ const push = useCallback(
               break;
             case 'chat':
               setStrangerTyping(false);
-              pushRef.current('received', raw.message, raw.username);
-              break; 
+              pushRef.current('received', raw.text, raw.username);
+              break;
             case 'typing':
               setStrangerTyping(raw.status);
               break;
@@ -143,7 +160,7 @@ const push = useCallback(
       if (!t || !isMatched) return;
       if (t.length > MAX_CHARS) { push('system', `❌ Max ${MAX_CHARS} characters`); return; }
       emit({ type: 'msg', text: t });
-      push('sent', t,'You');
+      push('sent', t, 'You');
       emit({ type: 'typing', status: false });
     },
     [isMatched, emit, push],
@@ -183,5 +200,7 @@ const push = useCallback(
     sendMessage,
     skipPartner,
     notifyTyping,
+    username,
+    setUsername,
   };
 }

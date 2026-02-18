@@ -26,8 +26,7 @@ export default function Message({ message }: Props) {
           : 'self-start bg-teal-600 text-white rounded-bl-sm'}
       `}
     >
-      {/* username (optional future use) */}
-      {!isSent && message.username && (
+      {message.username && (
         <span className="text-[10px] text-teal-200 font-medium mb-[1px]">
           {message.username}
         </span>
