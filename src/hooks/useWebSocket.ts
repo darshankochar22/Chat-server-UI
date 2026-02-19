@@ -6,7 +6,7 @@ import type {
   ServerPayload,
 } from '../types/chat';
 
-const SERVER_URL = 'wss://20.193.154.3:8080';
+const SERVER_URL = 'wss://api.confabs.xyz';
 const MAX_RECONNECT = 5;
 export const MAX_CHARS = 500;
 
@@ -202,5 +202,6 @@ export function useWebSocket() {
     notifyTyping,
     username,
     setUsername,
+    clearMessages: () => setMessages([]),
   };
 }
