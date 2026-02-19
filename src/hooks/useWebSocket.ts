@@ -87,6 +87,9 @@ export function useWebSocket() {
         attemptsRef.current = 0;
         delayRef.current    = 1000;
         setStatus('connected');
+        let browserToken = localStorage.getItem('confabs_browser_token');
+        if (!browserToken) { browserToken = crypto.randomUUID(); localStorage.setItem('confabs_browser_token', browserToken); }
+        emitRef.current({ type: 'identify', browser_token: browserToken });
         emitRef.current({ type: 'set_name', name: usernameRef.current });
       };
 

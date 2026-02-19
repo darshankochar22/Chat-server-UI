@@ -31,4 +31,5 @@ export type ClientPayload =
   | { type: 'skip' }
   | { type: 'typing'; status: boolean }
   | { type: 'set_name'; name: string }
+  | { type: 'identify'; browser_token: string }
 
